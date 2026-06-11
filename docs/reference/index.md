@@ -64,8 +64,19 @@ All app code lives in `src/voicebar/`:
 | `hotkeys.py` | `pynput` listeners: Right Option PTT, ⌃⌥S |
 | `inject.py` | `inject_text()` paste path, `type_text()` keystroke path |
 | `selection.py` | `grab_selection()` — synthesized ⌘C with clipboard restore |
+| `spool.py` | speak-request spool dir watcher + `submit()` |
+| `speech_clean.py` | markdown-to-speech text cleanup |
+| `speak_cli.py` | `codewithvoice-speak` command |
 | `playback.py` | speaker output |
 | `state.py` | config load/save, runtime state |
+
+## Speak spool
+
+`~/.local/state/codewithvoice/speak/` — drop a UTF-8 `.txt` file here and a
+running bar app speaks it (write to a dotfile first, then rename, for
+atomicity — or just use `codewithvoice-speak`). Watched every 0.5 s once
+models are loaded. `hooks/speak-summary.py` is a Claude Code Stop hook that
+feeds this; see the [guide](../guide/claude-code-voice.md).
 
 ## Commands
 

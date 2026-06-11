@@ -20,6 +20,7 @@ dependencies = [
 
 [project.scripts]
 codewithvoice = "voicebar.__main__:main"
+codewithvoice-speak = "voicebar.speak_cli:main"
 
 [dependency-groups]
 docs = ["mkdocs-material>=9.5"]

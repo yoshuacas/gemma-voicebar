@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 \"$CLAUDE_PROJECT_DIR\"/hooks/speak-summary.py",
+        "async": true,
+        "timeout": 60
+      }
+    ]
+  }
+}

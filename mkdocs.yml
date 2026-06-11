@@ -42,6 +42,7 @@ nav:
       - Fix hotkeys that do nothing: guide/fix-permissions.md
       - Tune or disable live typing: guide/live-typing.md
       - Change the speaking voice: guide/change-voice.md
+      - Spoken summaries from Claude Code: guide/claude-code-voice.md
       - Start at login: guide/start-at-login.md
       - Diagnose slow transcription: guide/diagnose-slow-asr.md
   - Reference: reference/index.md

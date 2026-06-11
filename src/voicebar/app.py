@@ -12,6 +12,8 @@ from .inject import inject_text, type_text
 from .playback import play_async
 from .recorder import Recorder
 from .selection import grab_selection
+from .speech_clean import clean_for_speech
+from .spool import SpoolWatcher
 from .state import Runtime, load_config, save_config
 from .streaming import StreamingTranscriber
 
@@ -62,6 +64,7 @@ class VoiceBarApp(rumps.App):
             on_ptt_up=self._on_ptt_up,
             on_speak=self._on_speak,
         )
+        self._spool = SpoolWatcher(on_text=self._on_spool_text)
         self._build_menu()
         self._hotkeys.start()
         threading.Thread(target=self._load_engines, daemon=True).start()
@@ -85,6 +88,7 @@ class VoiceBarApp(rumps.App):
         self._engines_ready = True
         self.title = ICON_IDLE
         self.status_item.title = f"Status: ready ({self._load_seconds:.0f}s load)"
+        self._spool.start()  # only accept speak requests once Kokoro is up
 
     def _on_load_failed(self, msg: str) -> None:
         self.title = ICON_WARN
@@ -129,6 +133,7 @@ class VoiceBarApp(rumps.App):
 
     def _on_quit(self, _sender) -> None:
         self._hotkeys.stop()
+        self._spool.stop()
         rumps.quit_application()
 
     # ---------- main-thread title helpers ----------
@@ -250,6 +255,14 @@ class VoiceBarApp(rumps.App):
             return
         self._set_title(ICON_BUSY)
         threading.Thread(target=self._tts_and_play, args=(text,), daemon=True).start()
+
+    def _on_spool_text(self, text: str) -> None:
+        """Speak text dropped into the spool dir (runs on the watcher thread)."""
+        text = clean_for_speech(text)
+        if not text:
+            return
+        self._set_title(ICON_BUSY)
+        self._tts_and_play(text)
 
     def _tts_and_play(self, text: str) -> None:
         try:
