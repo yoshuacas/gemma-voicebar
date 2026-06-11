@@ -5,7 +5,7 @@ several seconds, or live typing lags far behind.
 
 ## 1. Read the per-pass timing
 
-Run the bar from a foreground terminal (`make -C ops bar`) and dictate. Every
+Run the bar from a foreground terminal (`make run`) and dictate. Every
 ASR pass logs a line:
 
 ```text

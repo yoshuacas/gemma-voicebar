@@ -52,7 +52,7 @@ Constants: audio is captured at 16 kHz mono (`recorder.py`), TTS output is
 
 ## Module map
 
-All app code lives in `packages/voicebar/src/voicebar/`:
+All app code lives in `src/voicebar/`:
 
 | Module | Responsibility |
 |---|---|
@@ -70,7 +70,9 @@ All app code lives in `packages/voicebar/src/voicebar/`:
 ## Commands
 
 ```bash
-make -C ops install-deps   # uv sync + editable installs
-make -C ops espeak         # brew install espeak-ng
-make -C ops bar            # run the app in the foreground
+make install   # uv sync (venv + all dependencies)
+make run       # run the app in the foreground
+make smoke     # in-process ASR + TTS engine test, no desktop session needed
+make espeak    # brew install espeak-ng
+make docs      # serve this documentation site locally
 ```

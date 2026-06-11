@@ -35,5 +35,3 @@ word-by-word. See [How it works](explanation/architecture.md) for the design.
 - **100% local** — audio never leaves your machine.
 - **Live typing** — confirmed words are typed while you speak (LocalAgreement-2 over chunked whisper passes), with guards against whisper's silence-hallucination loops.
 - **Clipboard-safe** — paste injection snapshots and restores your clipboard, including rich content.
-
-Source: [github.com/yoshuacas/gemma-voicebar](https://github.com/yoshuacas/gemma-voicebar)

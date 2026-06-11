@@ -19,7 +19,7 @@ to commit early, so all text arrives on release.
 ## Change the commit cadence
 
 The re-transcription interval is the `interval` parameter of
-`StreamingTranscriber` in `packages/voicebar/src/voicebar/streaming.py`
+`StreamingTranscriber` in `src/voicebar/streaming.py`
 (default `2.5` seconds, set at the call site in `app.py`).
 
 - **Lower it** (e.g. `1.5`) for snappier commits at the cost of more compute

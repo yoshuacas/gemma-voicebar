@@ -24,7 +24,7 @@ enabled under all three panes:
 ## After changing a grant
 
 1. Quit the app: menu bar `●` → **Quit**.
-2. Relaunch: `make -C ops bar`.
+2. Relaunch: `make run`.
 
 Microphone takes effect immediately, but the `pynput` listeners only read
 Input Monitoring and Accessibility state at startup — a relaunch is required.

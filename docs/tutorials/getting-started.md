@@ -11,15 +11,15 @@ and [uv](https://docs.astral.sh/uv/getting-started/installation/).
 ```bash
 git clone https://github.com/yoshuacas/gemma-voicebar.git
 cd gemma-voicebar
-make -C ops install-deps
+make install
 ```
 
-This creates a virtualenv and installs the workspace packages with `uv`.
+This creates a virtualenv and installs everything with `uv`.
 
 ## 2. Install espeak-ng
 
 ```bash
-make -C ops espeak
+make espeak
 ```
 
 Kokoro falls back to espeak-ng for words outside its lexicon; without it,
@@ -28,7 +28,7 @@ uncommon words may be skipped during speech playback.
 ## 3. Launch the app
 
 ```bash
-make -C ops bar
+make run
 ```
 
 The menu bar shows `⏳` while models load. The first launch downloads
@@ -47,7 +47,7 @@ Approve all three under **System Settings → Privacy & Security**:
 3. **Input Monitoring**
 
 After granting Input Monitoring, quit the app (menu bar → Quit) and run
-`make -C ops bar` again so the hotkey listeners pick up the grant.
+`make run` again so the hotkey listeners pick up the grant.
 
 ## 5. Dictate
 
