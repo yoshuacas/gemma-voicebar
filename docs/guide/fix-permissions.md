@@ -29,6 +29,14 @@ enabled under all three panes:
 Microphone takes effect immediately, but the `pynput` listeners only read
 Input Monitoring and Accessibility state at startup — a relaunch is required.
 
+## Speak (⌃⌥S) works in some apps but not others
+
+The app waits for you to physically release ⌃ and ⌥ before synthesizing the
+⌘C that grabs your selection — macOS merges held modifiers into synthesized
+keystrokes, and ⌘⌃⌥C matches no Copy command in most apps (terminals are the
+strictest). If speak-selection still fails somewhere, release the hotkey
+promptly after pressing it, and check the log for `[hotkeys]` errors.
+
 ## Still stuck
 
 - Check you're testing in a normal text field. Password and other secure fields

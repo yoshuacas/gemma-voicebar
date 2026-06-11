@@ -35,6 +35,19 @@ ICON_WARN = "⚠"
 ICON_EMPTY = "∅"
 
 
+def _notify(title: str, message: str) -> None:
+    """Notification that degrades to a log line.
+
+    rumps.notification raises when the interpreter lacks an Info.plist with
+    CFBundleIdentifier (bare venv python). A failed notification must never
+    take down the calling flow.
+    """
+    try:
+        rumps.notification("VoiceBar", title, message)
+    except Exception as e:  # noqa: BLE001
+        print(f"[notify] {title}: {message} ({e})", flush=True)
+
+
 class VoiceBarApp(rumps.App):
     def __init__(self) -> None:
         super().__init__("VoiceBar", title=ICON_BUSY, quit_button=None)
@@ -76,7 +89,7 @@ class VoiceBarApp(rumps.App):
     def _on_load_failed(self, msg: str) -> None:
         self.title = ICON_WARN
         self.status_item.title = "Status: load failed"
-        rumps.notification("VoiceBar", "Engines failed to load", msg)
+        _notify("Engines failed to load", msg)
 
     # ---------- menu ----------
 
@@ -128,12 +141,12 @@ class VoiceBarApp(rumps.App):
         threading.Timer(after, self._set_title, args=(ICON_IDLE,)).start()
 
     def _warn(self, title: str, message: str) -> None:
-        rumps.notification("VoiceBar", title, message)
+        _notify(title, message)
         self._flash_title(ICON_WARN, after=0.8)
 
     def _not_ready_notice(self) -> None:
-        rumps.notification(
-            "VoiceBar", "Still loading", "Models aren't ready yet — try again in a moment."
+        _notify(
+            "Still loading", "Models aren't ready yet — try again in a moment."
         )
 
     # ---------- PTT flow ----------
@@ -147,8 +160,7 @@ class VoiceBarApp(rumps.App):
         try:
             self.recorder.start()
         except Exception as e:  # noqa: BLE001
-            rumps.notification(
-                "VoiceBar",
+            _notify(
                 "Microphone error",
                 f"{e}. Grant Microphone permission in System Settings.",
             )
@@ -220,9 +232,7 @@ class VoiceBarApp(rumps.App):
             Runtime.last_injected = full_text
             self._flash_title(ICON_OK)
             if clipped:
-                rumps.notification(
-                    "VoiceBar", "Clip cut at 30s", "Long dictation truncated."
-                )
+                _notify("Clip cut at 30s", "Long dictation truncated.")
         else:
             self._warn("Paste blocked", "Likely a secure field. Text left on clipboard.")
 
@@ -234,8 +244,8 @@ class VoiceBarApp(rumps.App):
             return
         text = grab_selection() or Runtime.last_injected
         if not text:
-            rumps.notification(
-                "VoiceBar", "Nothing to speak", "Select text or dictate first."
+            _notify(
+                "Nothing to speak", "Select text or dictate first."
             )
             return
         self._set_title(ICON_BUSY)

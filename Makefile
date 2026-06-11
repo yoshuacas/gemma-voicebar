@@ -10,6 +10,9 @@ help:
 
 install:
 	uv sync
+	@# rumps notifications need a CFBundleIdentifier next to the interpreter
+	@test -f .venv/bin/Info.plist || /usr/libexec/PlistBuddy \
+		-c 'Add :CFBundleIdentifier string "codewithvoice"' .venv/bin/Info.plist
 
 run:
 	uv run python -m voicebar
