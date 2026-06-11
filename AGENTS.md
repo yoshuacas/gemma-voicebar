@@ -1,0 +1,84 @@
+# gemma-voicebar — Agent Guide
+
+> **Meta note**: This is the canonical agent knowledge base for this repo.
+> `CLAUDE.md` is a symlink to this file — always edit `AGENTS.md` directly.
+> When you learn something durable about the codebase, update this file.
+
+## Repository scope
+
+- **What this is**: a single-process macOS menu-bar dictation app (mlx-whisper ASR + Kokoro TTS), plus standalone Gemma 4 capability demos in `demos/`.
+- **What this is not**: a client/server system. A FastAPI daemon existed and was deliberately deleted (2026-05-18) — do NOT reintroduce a daemon, HTTP API, or LaunchAgent.
+- **Primary language**: Python 3.12. **Package manager**: `uv` (workspace).
+- **Platform**: macOS / Apple Silicon only (pyobjc, rumps, MLX).
+
+## Layout
+
+```text
+gemma-test/
+├── packages/voicebar/src/voicebar/   — the app (all feature work happens here)
+│   ├── app.py        — rumps app, menu, PTT + speak flows
+│   ├── engine/       — asr.py (whisper + hallucination filter), tts.py (Kokoro)
+│   ├── streaming.py  — StreamingTranscriber: LocalAgreement-2 live typing
+│   ├── recorder.py   — mic capture (16 kHz mono, 29.5 s cap, snapshot())
+│   ├── hotkeys.py    — pynput: Right Option PTT, ⌃⌥S speak
+│   ├── inject.py     — inject_text() paste path, type_text() keystroke path
+│   ├── selection.py  — synthesized ⌘C with clipboard snapshot/restore
+│   └── state.py      — config (~/.config/gemma-voicebar/config.json)
+├── packages/shared/  — Gemma 4 loader, used ONLY by demos/
+├── demos/            — Gemma 4 text/image/audio/video demos (independent of the app)
+├── docs/             — GitHub Pages site (Diátaxis: tutorials/guide/reference/explanation)
+└── ops/Makefile      — bar / install-deps / espeak
+```
+
+## Canonical commands
+
+```bash
+# Install
+make -C ops install-deps
+
+# Run the app (foreground; menu bar shows ⏳ then ●)
+make -C ops bar
+
+# Engine smoke test (no desktop session needed)
+uv run python -c "
+from pathlib import Path
+from voicebar.engine import asr, tts
+print(asr.transcribe_wav_bytes(Path('samples/Example.ogg').read_bytes()))
+print(tts.synthesize('ok')[0].shape)"
+```
+
+There is no test suite or linter configured. Verify changes with the smoke test
+above; for `streaming.py` changes, drive `StreamingTranscriber` with a fake
+recorder whose `snapshot()` returns a growing slice of decoded sample audio.
+
+## Rules
+
+- **NEVER** retract typed text in the live-typing path — committed words are final by design; fix commit *quality* (holdback, agreement, run guard), not output.
+- **NEVER** trust LocalAgreement alone to reject whisper hallucinations — silence loops ("cooling cooling…") are self-consistent across passes. Keep all three guards: segment filter in `engine/asr.py`, `MAX_WORD_RUN` in `streaming.py`, RMS silence skip in the worker loop.
+- **ALWAYS** hold `app.py`'s `_engine_lock` around any whisper/Kokoro call; the engines are not concurrency-safe under MPS/MLX.
+- **ALWAYS** mutate the menu-bar UI on the main thread via `AppHelper.callAfter` (see `_set_title`).
+- **DO NOT** raise the 29.5 s recording cap without windowing the streaming buffer — each streaming pass re-transcribes from sample 0, so cost grows with clip length.
+- **DO NOT** add models that won't fit comfortably in RAM next to normal apps; the Gemma-as-ASR experiment thrashed 32 GB into 44 GB of swap. Memory-pressure check: if the process RSS ≪ VSZ, the model is paged out — free RAM, don't tune inference.
+- pyobjc packages in `pyproject.toml` are lowercase (`pyobjc-framework-cocoa`); `AppKit` ships inside `pyobjc-framework-cocoa`.
+
+## Common tasks
+
+### Changing live-typing behavior
+1. Algorithm lives in `streaming.py` (`HOLDBACK_WORDS`, `MAX_WORD_RUN`, `interval`).
+2. Replicate any reported garbled output as an input-sequence unit case first (feed hypotheses through `_ingest`/`finalize`), then change the algorithm.
+3. Wiring is in `app.py` `_on_ptt_down` / `_asr_and_inject`; the paste fallback path must keep working when nothing was committed.
+
+### Swapping the ASR model
+1. Change `MODEL_REPO` in `engine/asr.py` (e.g. `mlx-community/whisper-medium-mlx-q4` for better accuracy at ~1 GB).
+2. Run the engine smoke test; check the `[asr] … rtf=…` log line stays well above 1× realtime.
+
+### Manual end-to-end verification (needs desktop session + permissions)
+1. `make -C ops bar`, wait for `●`.
+2. TextEdit → hold Right Option, speak ≥6 s, release: words appear during speech (bursts), tail on release, `✓` flash.
+3. Select text → ⌃⌥S speaks it. Clipboard contents must survive both flows.
+
+## Permissions gotcha
+
+Microphone, Accessibility, and Input Monitoring grants attach to the *terminal
+app* that launched the bar. Hotkey listeners read grants at startup — relaunch
+after granting. Secure fields reject synthesized input by design.
