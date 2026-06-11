@@ -2,6 +2,8 @@
 name = "gemma-voicebar"
 version = "0.2.0"
 description = "Local, accurate voice dictation for macOS — Whisper ASR + Kokoro TTS in a single menu-bar app"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
     "rumps>=0.4",

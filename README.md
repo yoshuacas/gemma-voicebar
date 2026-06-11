@@ -67,5 +67,4 @@ Makefile          — install / run / smoke / espeak / docs
 
 ## License
 
-Code in this repository is for personal experimentation; no license has been
-chosen yet. Whisper weights are MIT, Kokoro TTS is Apache 2.0.
+[MIT](./LICENSE). Whisper weights are MIT, Kokoro TTS is Apache 2.0.
