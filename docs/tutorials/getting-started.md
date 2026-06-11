@@ -65,6 +65,37 @@ Kokoro reads it aloud.
 
 That's it — you have a working local dictation setup.
 
+## 7. Optional: spoken summaries from Claude Code
+
+If you use Claude Code, close the loop — dictate your prompts with Right
+Option, and hear a one-sentence spoken summary when Claude finishes each turn:
+
+```bash
+mkdir -p ~/.claude/hooks
+cp hooks/speak-summary.py ~/.claude/hooks/
+```
+
+Then add to `~/.claude/settings.json` (create it if missing):
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 ~/.claude/hooks/speak-summary.py",
+        "async": true,
+        "timeout": 60
+      }
+    ]
+  }
+}
+```
+
+Start a new Claude Code session anywhere, ask it something, and the bar speaks
+the summary. Details and tuning:
+[How to get spoken summaries from Claude Code](../guide/claude-code-voice.md).
+
 **What next?**
 
 - [How to fix hotkeys that do nothing](../guide/fix-permissions.md) — if step 5 didn't work

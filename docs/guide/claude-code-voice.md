@@ -19,10 +19,42 @@ If the summarizer call fails (no `claude` CLI, no credits, timeout), the hook
 falls back to speaking the first two sentences of the response, markdown
 stripped.
 
-## Enable it for a project
+## Enable it everywhere (recommended)
 
-Copy `hooks/speak-summary.py` into your project and register the hook in the
-project's `.claude/settings.json`:
+The hook is stdlib-only Python — it does not need this project's virtualenv,
+so one copy serves all your projects:
+
+```bash
+mkdir -p ~/.claude/hooks
+cp hooks/speak-summary.py ~/.claude/hooks/
+```
+
+Register it in `~/.claude/settings.json` (create the file if missing; if you
+already have a `hooks` section, add the `Stop` entry to it):
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 ~/.claude/hooks/speak-summary.py",
+        "async": true,
+        "timeout": 60
+      }
+    ]
+  }
+}
+```
+
+Hooks load at session start — open a **new** Claude Code session to hear it.
+`"async": true` matters: the summary is generated in the background, so your
+next prompt is never blocked.
+
+## Or enable it per project
+
+Copy the script into the project and register it in the project's
+`.claude/settings.json` instead, using the project-relative path:
 
 ```json
 {
@@ -39,9 +71,8 @@ project's `.claude/settings.json`:
 }
 ```
 
-The hook is stdlib-only Python — it does not need this project's virtualenv.
-Register it in `~/.claude/settings.json` instead to enable it for every
-project (use an absolute path to the script in that case).
+This repo ships exactly that configuration, so Claude Code sessions in this
+repo speak summaries out of the box.
 
 ## Speak anything from the shell
 
@@ -62,3 +93,14 @@ running with `●` in the menu bar.
 - **Summarizer model** — `SUMMARY_MODEL` in the same file (default `haiku`:
   fast and cheap; each summary costs roughly 500 input tokens).
 - **Voice** — the spool uses the same voice as ⌃⌥S (menu bar → Voice).
+
+## If you hear nothing
+
+1. Is the bar running with `●` in the menu bar? The spool is only watched
+   once models finish loading.
+2. Did you start a **new** Claude Code session after registering the hook?
+3. Is the `claude` CLI on the PATH that hooks run with? Without it the hook
+   still speaks (first two sentences of the response) — silence means the
+   spool isn't being read, not that summarization failed.
+4. Test the pipeline directly: `codewithvoice-speak "test"` — if that speaks,
+   the bar side is fine and the issue is hook registration.

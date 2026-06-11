@@ -87,3 +87,11 @@ make smoke     # in-process ASR + TTS engine test, no desktop session needed
 make espeak    # brew install espeak-ng
 make docs      # serve this documentation site locally
 ```
+
+Installed commands (`uv run …` from the repo, or on PATH in the venv):
+
+```bash
+codewithvoice                 # the menu-bar app (same as make run)
+codewithvoice-speak "text"    # queue text for the running app to speak
+echo "text" | codewithvoice-speak   # …or from stdin
+```

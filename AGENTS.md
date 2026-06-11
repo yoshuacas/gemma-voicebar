@@ -22,7 +22,11 @@ src/voicebar/
 ├── hotkeys.py    — pynput: Right Option PTT, ⌃⌥S speak
 ├── inject.py     — inject_text() paste path, type_text() keystroke path
 ├── selection.py  — synthesized ⌘C with clipboard snapshot/restore
+├── spool.py      — speak-request spool (~/.local/state/codewithvoice/speak/)
+├── speech_clean.py — markdown→speech text cleanup
+├── speak_cli.py  — codewithvoice-speak entry point
 └── state.py      — config (~/.config/codewithvoice/config.json)
+hooks/speak-summary.py — Claude Code Stop hook (stdlib-only; summarizes via `claude -p`)
 docs/             — MkDocs Material site, deployed by .github/workflows/docs.yml
 ```
 
@@ -48,6 +52,7 @@ growing slice of decoded sample audio.
 - **ALWAYS** mutate the menu-bar UI on the main thread via `AppHelper.callAfter` (see `_set_title`).
 - **ALWAYS** update the matching page under `docs/` (reference for behavior, guides for workflows) in the same change as a user-visible code change.
 - **DO NOT** raise the 29.5 s recording cap without windowing the streaming buffer — each streaming pass re-transcribes from sample 0, so cost grows with clip length.
+- **DO NOT** add a daemon/socket for external speak requests — the file spool (`spool.py`) is the supported IPC; keep `hooks/speak-summary.py` stdlib-only (it must run outside this venv) and keep spool writes atomic (tmp file, then rename).
 - **DO NOT** add models that won't fit comfortably in RAM next to normal apps; a 10 GB Gemma-as-ASR experiment thrashed 32 GB into 44 GB of swap. Memory-pressure check: if the process RSS ≪ VSZ, the model is paged out — free RAM, don't tune inference.
 - pyobjc packages in `pyproject.toml` are lowercase (`pyobjc-framework-cocoa`); `AppKit` ships inside `pyobjc-framework-cocoa`.
 

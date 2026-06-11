@@ -36,6 +36,7 @@ word-by-word. See [How it works](explanation/architecture.md) for the design.
 
 - **Hold Right Option** — push-to-talk: speak, release, text lands at your cursor.
 - **⌃⌥S** — speaks the selected text aloud through Kokoro (8 voices).
+- **Spoken Claude Code summaries** — a [Stop hook](guide/claude-code-voice.md) speaks a one-sentence summary of each turn; `codewithvoice-speak` pipes any text to voice.
 - **100% local** — audio never leaves your machine.
 - **Live typing** — confirmed words are typed while you speak (LocalAgreement-2 over chunked whisper passes), with guards against whisper's silence-hallucination loops.
 - **Clipboard-safe** — paste injection snapshots and restores your clipboard, including rich content.

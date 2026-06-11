@@ -28,6 +28,7 @@ Anthropic subscription plans), no audio sent anywhere.
 - **Push-to-talk dictation** — hold Right Option, speak, release; text lands at your cursor.
 - **Live typing** — confirmed words are typed *while* you speak (LocalAgreement-2 over chunked whisper passes), with layered guards against whisper's silence-hallucination loops.
 - **Speak-back** — ⌃⌥S reads the selected text aloud; 8 Kokoro voices.
+- **Spoken Claude Code summaries** — a Stop hook speaks a one-sentence summary of every turn, so you hear what happened instead of reading walls of text. Works for any tool via `codewithvoice-speak` or the speak spool.
 - **100% local** — audio never leaves the machine; models are ~500 MB (whisper-small-q4) + ~330 MB (Kokoro).
 - **Clipboard-safe** — paste injection snapshots and restores clipboard contents, including rich types.
 - **Single process** — no daemon, no HTTP; one `rumps` app owns hotkeys, mic, models, and injection.
@@ -48,6 +49,11 @@ Grant **Microphone**, **Accessibility**, and **Input Monitoring** to your
 terminal app when prompted, relaunch, then hold **Right Option** in any text
 field and speak. Full walkthrough:
 [Getting started](https://yoshuacas.github.io/codewithvoice/tutorials/getting-started/).
+
+For the full voice loop with Claude Code — dictate your prompt, hear a spoken
+summary of each response — add the
+[Stop hook](https://yoshuacas.github.io/codewithvoice/guide/claude-code-voice/)
+(one settings.json entry, ~2 minutes).
 
 ## Documentation
 
