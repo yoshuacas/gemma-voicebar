@@ -3,7 +3,7 @@
 **Goal:** Right Option or ⌃⌥S is pressed and nothing happens — no recording
 indicator, no notification.
 
-**You'll need:** to know which terminal app you launch gemma-voicebar from.
+**You'll need:** to know which terminal app you launch codewithvoice from.
 
 macOS attributes permissions to the *host application* of the process. When you
 launch from Terminal, the grants live on Terminal — not on Python or the bar app.

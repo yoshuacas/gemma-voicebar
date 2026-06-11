@@ -1,5 +1,5 @@
 [project]
-name = "gemma-voicebar"
+name = "codewithvoice"
 version = "0.2.0"
 description = "Local, accurate voice dictation for macOS — Whisper ASR + Kokoro TTS in a single menu-bar app"
 license = "MIT"
@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-gemma-voicebar = "voicebar.__main__:main"
+codewithvoice = "voicebar.__main__:main"
 
 [dependency-groups]
 docs = ["mkdocs-material>=9.5"]

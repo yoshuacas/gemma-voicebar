@@ -1,8 +1,8 @@
-site_name: gemma-voicebar
+site_name: codewithvoice
 site_description: Local, accurate voice dictation for macOS — Whisper ASR + Kokoro TTS in a single menu-bar app
-site_url: https://yoshuacas.github.io/gemma-voicebar/
-repo_url: https://github.com/yoshuacas/gemma-voicebar
-repo_name: yoshuacas/gemma-voicebar
+site_url: https://yoshuacas.github.io/codewithvoice/
+repo_url: https://github.com/yoshuacas/codewithvoice
+repo_name: yoshuacas/codewithvoice
 
 theme:
   name: material

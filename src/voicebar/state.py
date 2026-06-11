@@ -3,17 +3,23 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-CONFIG_DIR = Path.home() / ".config" / "gemma-voicebar"
+CONFIG_DIR = Path.home() / ".config" / "codewithvoice"
+LEGACY_CONFIG_DIR = Path.home() / ".config" / "gemma-voicebar"
 CONFIG_PATH = CONFIG_DIR / "config.json"
 
 DEFAULT_CONFIG = {"voice": "af_heart", "live_typing": True}
 
 
 def load_config() -> dict:
-    if not CONFIG_PATH.exists():
-        return dict(DEFAULT_CONFIG)
+    path = CONFIG_PATH
+    if not path.exists():
+        legacy = LEGACY_CONFIG_DIR / "config.json"
+        if legacy.exists():
+            path = legacy
+        else:
+            return dict(DEFAULT_CONFIG)
     try:
-        return {**DEFAULT_CONFIG, **json.loads(CONFIG_PATH.read_text())}
+        return {**DEFAULT_CONFIG, **json.loads(path.read_text())}
     except Exception:
         return dict(DEFAULT_CONFIG)
 

@@ -6,7 +6,7 @@ Task-focused recipes. If you're new, do the
 ## Setup
 
 - [How to fix hotkeys that do nothing](fix-permissions.md) — the permission checklist, and why grants attach to your terminal app.
-- [How to start gemma-voicebar at login](start-at-login.md) — keep it running without a terminal window.
+- [How to start codewithvoice at login](start-at-login.md) — keep it running without a terminal window.
 
 ## Daily use
 

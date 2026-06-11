@@ -6,7 +6,7 @@ adjust its cadence.
 ## Disable (or re-enable) live typing
 
 Menu bar `●` → **Live typing**. The checkmark toggles; the setting persists in
-`~/.config/gemma-voicebar/config.json` as `"live_typing"`.
+`~/.config/codewithvoice/config.json` as `"live_typing"`.
 
 - **On (default):** confirmed words are typed while you speak, ~2.5 s behind;
   the remainder lands when you release the key.

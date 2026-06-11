@@ -1,8 +1,8 @@
-# gemma-voicebar
+# codewithvoice
 
 *Local, accurate voice dictation for macOS — in your menu bar, no cloud.*
 
-gemma-voicebar replaces macOS built-in dictation with a small menu-bar app that runs
+codewithvoice replaces macOS built-in dictation with a small menu-bar app that runs
 [mlx-whisper](https://github.com/ml-explore/mlx-examples) for speech-to-text and
 [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) for text-to-speech — entirely
 on-device, in a single process. Hold a key, speak, and accurate text appears at your
@@ -11,10 +11,14 @@ cursor; with **live typing** enabled, confirmed words are typed as you talk.
 Built for Apple Silicon. Tested on an M2 Pro with 32 GB RAM; the whisper model is
 ~500 MB, so it runs comfortably alongside everything else.
 
+Because it types into whatever has focus, it doubles as **voice input for AI coding
+tools**: talk your prompts into Claude Code, Cursor, aider, or any terminal or
+editor — no subscription-gated voice feature, no audio leaving the machine.
+
 ## Why not just use macOS dictation?
 
 Apple's dictation types instantly but mishears too often, and its engine is not
-pluggable — there is no API to swap in a better model. gemma-voicebar mimics the
+pluggable — there is no API to swap in a better model. codewithvoice mimics the
 type-as-you-speak experience with whisper's accuracy instead. The trade-off: words
 appear in confirmed bursts a couple of seconds behind your voice rather than
 word-by-word. See [How it works](explanation/architecture.md) for the design.

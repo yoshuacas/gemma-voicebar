@@ -1,4 +1,4 @@
-# How to start gemma-voicebar at login
+# How to start codewithvoice at login
 
 **Goal:** have the bar running after every reboot without keeping a terminal
 window open.
@@ -9,15 +9,15 @@ launcher script registered as a Login Item.
 ## 1. Create a launcher
 
 ```bash
-cat > ~/bin/gemma-voicebar-launch.command <<'EOF'
+cat > ~/bin/codewithvoice-launch.command <<'EOF'
 #!/bin/zsh
-cd /path/to/gemma-voicebar
+cd /path/to/codewithvoice
 exec uv run python -m voicebar
 EOF
-chmod +x ~/bin/gemma-voicebar-launch.command
+chmod +x ~/bin/codewithvoice-launch.command
 ```
 
-Replace `/path/to/gemma-voicebar` with your clone location.
+Replace `/path/to/codewithvoice` with your clone location.
 
 ## 2. Register it
 

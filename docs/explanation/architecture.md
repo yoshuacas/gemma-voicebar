@@ -1,4 +1,4 @@
-# How gemma-voicebar works
+# How codewithvoice works
 
 *Guiding question: how do you get accurate, live-feeling dictation out of
 on-device models on a memory-constrained Mac?*
@@ -28,7 +28,7 @@ models, which is not the case.
 ## Live typing on a non-streaming model
 
 Whisper transcribes complete clips; it has no streaming mode. Yet macOS
-dictation users expect text to appear as they speak. gemma-voicebar fakes
+dictation users expect text to appear as they speak. codewithvoice fakes
 streaming with **chunked re-transcription plus LocalAgreement-2**
 (`streaming.py`):
 

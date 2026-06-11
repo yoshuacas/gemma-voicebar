@@ -32,7 +32,7 @@ Menu items:
 
 ## Configuration file
 
-`~/.config/gemma-voicebar/config.json` — written on change, merged over
+`~/.config/codewithvoice/config.json` — written on change, merged over
 defaults at startup.
 
 | Key | Type | Default | Meaning |

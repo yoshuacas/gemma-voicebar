@@ -1,6 +1,6 @@
 # Getting started
 
-Take gemma-voicebar from zero to your first dictated sentence. Takes about
+Take codewithvoice from zero to your first dictated sentence. Takes about
 10 minutes; most of that is the one-time model download.
 
 **You'll need:** a Mac with Apple Silicon, macOS 14+, [Homebrew](https://brew.sh),
@@ -9,8 +9,8 @@ and [uv](https://docs.astral.sh/uv/getting-started/installation/).
 ## 1. Clone and install
 
 ```bash
-git clone https://github.com/yoshuacas/gemma-voicebar.git
-cd gemma-voicebar
+git clone https://github.com/yoshuacas/codewithvoice.git
+cd codewithvoice
 make install
 ```
 

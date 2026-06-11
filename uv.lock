@@ -275,6 +275,45 @@ wheels = [
 ]
 
 [[package]]
+name = "codewithvoice"
+version = "0.2.0"
+source = { editable = "." }
+dependencies = [
+    { name = "kokoro" },
+    { name = "mlx-whisper" },
+    { name = "numpy" },
+    { name = "pynput" },
+    { name = "pyobjc-framework-cocoa" },
+    { name = "pyobjc-framework-quartz" },
+    { name = "rumps" },
+    { name = "scipy" },
+    { name = "sounddevice" },
+    { name = "soundfile" },
+]
+
+[package.dev-dependencies]
+docs = [
+    { name = "mkdocs-material" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "kokoro", specifier = ">=0.9" },
+    { name = "mlx-whisper", specifier = ">=0.4.0" },
+    { name = "numpy", specifier = ">=1.26" },
+    { name = "pynput", specifier = ">=1.7" },
+    { name = "pyobjc-framework-cocoa", specifier = ">=12" },
+    { name = "pyobjc-framework-quartz", specifier = ">=12" },
+    { name = "rumps", specifier = ">=0.4" },
+    { name = "scipy", specifier = ">=1.11" },
+    { name = "sounddevice", specifier = ">=0.4" },
+    { name = "soundfile", specifier = ">=0.13.1" },
+]
+
+[package.metadata.requires-dev]
+docs = [{ name = "mkdocs-material", specifier = ">=9.5" }]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -505,45 +544,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/d5/8d/1c51c094345df128c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d5/0c/043d5e551459da400957a1395e0febbf771446ff34291afcbe3d8be2a279/fsspec-2026.4.0-py3-none-any.whl", hash = "sha256:11ef7bb35dab8a394fde6e608221d5cf3e8499401c249bebaeaad760a1a8dec2", size = 203402, upload-time = "2026-04-29T20:42:36.842Z" },
 ]
-
-[[package]]
-name = "gemma-voicebar"
-version = "0.2.0"
-source = { editable = "." }
-dependencies = [
-    { name = "kokoro" },
-    { name = "mlx-whisper" },
-    { name = "numpy" },
-    { name = "pynput" },
-    { name = "pyobjc-framework-cocoa" },
-    { name = "pyobjc-framework-quartz" },
-    { name = "rumps" },
-    { name = "scipy" },
-    { name = "sounddevice" },
-    { name = "soundfile" },
-]
-
-[package.dev-dependencies]
-docs = [
-    { name = "mkdocs-material" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "kokoro", specifier = ">=0.9" },
-    { name = "mlx-whisper", specifier = ">=0.4.0" },
-    { name = "numpy", specifier = ">=1.26" },
-    { name = "pynput", specifier = ">=1.7" },
-    { name = "pyobjc-framework-cocoa", specifier = ">=12" },
-    { name = "pyobjc-framework-quartz", specifier = ">=12" },
-    { name = "rumps", specifier = ">=0.4" },
-    { name = "scipy", specifier = ">=1.11" },
-    { name = "sounddevice", specifier = ">=0.4" },
-    { name = "soundfile", specifier = ">=0.13.1" },
-]
-
-[package.metadata.requires-dev]
-docs = [{ name = "mkdocs-material", specifier = ">=9.5" }]
 
 [[package]]
 name = "ghp-import"

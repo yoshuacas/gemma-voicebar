@@ -1,4 +1,4 @@
-# gemma-voicebar — Agent Guide
+# codewithvoice — Agent Guide
 
 > **Meta note**: This is the canonical agent knowledge base for this repo.
 > `CLAUDE.md` is a symlink to this file — always edit `AGENTS.md` directly.
@@ -22,7 +22,7 @@ src/voicebar/
 ├── hotkeys.py    — pynput: Right Option PTT, ⌃⌥S speak
 ├── inject.py     — inject_text() paste path, type_text() keystroke path
 ├── selection.py  — synthesized ⌘C with clipboard snapshot/restore
-└── state.py      — config (~/.config/gemma-voicebar/config.json)
+└── state.py      — config (~/.config/codewithvoice/config.json)
 docs/             — MkDocs Material site, deployed by .github/workflows/docs.yml
 ```
 

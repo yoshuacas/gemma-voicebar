@@ -16,7 +16,7 @@ Menu bar `●` → **Voice** → choose one:
 | `bm_george` | British male |
 
 The choice takes effect on the next ⌃⌥S press and persists across restarts in
-`~/.config/gemma-voicebar/config.json` as `"voice"`.
+`~/.config/codewithvoice/config.json` as `"voice"`.
 
 All voices are American/British English; the Kokoro pipeline is initialized
 with `lang_code="a"` (American English G2P). Other languages are not exposed
